@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:installLocation="internalOnly"
     package="com.yarieldis.customaccount">
 
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
@@ -20,15 +22,12 @@
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="android.accounts.AccountAuthenticator">
-
-                </action>
+                <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
+
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator">
-
-            </meta-data>
+                android:resource="@xml/authenticator" />
         </service>
 
         <activity android:name=".CustomAccountCreateActivity" />
@@ -44,6 +43,18 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".service.CustomSyncService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter" />
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/sync_adapter" />
+        </service>
     </application>
 
 </manifest>
